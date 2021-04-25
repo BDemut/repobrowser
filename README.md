@@ -51,7 +51,7 @@ Po wybraniu elementu w ListFragment, za pomocą SafeArgs przekazywane jest ID re
 Klasa Repository ma tylko jedną instancję wspólną dla całej aplikacji. Posiada ona wyłączny dostęp do bazy danych i interfejsu API. Działa ona na zasadzie 'single source of truth' - dane pobierane z internetu umieszczane są w bazie danych, i obiekt Repository udostępnia tylko i wyłącznie dane z bazy danych. Obiekt ten jest również odpowiedzialny za konwertowanie obiektów przedstawiających repozytoria z jednego typu 'data class' w inny (w niektórych przypadkach jest to uproszczone gdy DAO poprzez polecenie SELECT zwraca bezpośrednio model domeny).
 
 # Kolejne iteracje projektu
-Funkcje jakie można dodać w kolejnych iteracjach:
+Jak można rozwinąć projekt w kolejnych iteracjach:
 
 Autoryzacja użytkownika
 -
@@ -71,4 +71,4 @@ Przy wyświetlaniu repozytoriów użytkownika posiadającego ich wiele (jak Alle
 
 Test Driven Development
 -
-Aby w ograniczonym zadanym czasie skupić się jak najbardziej na pisaniu "kodu właściwego" aplikacji, w dużej części zaniedbałem pisanie testów. O ile na krótką metę pozwala to zaoszczędzić trochę czasu, może sporo kosztować w przyszłości. Przy dalszym rozwoju aplikacji należało by dodać odpowiednie testy.
+Aby w ograniczonym zadanym czasie skupić się jak najbardziej na pisaniu "kodu właściwego" aplikacji, w dużej części zaniedbałem pisanie testów automatycznych na rzecz testów manualnych. O ile na krótką metę pozwala to zaoszczędzić trochę czasu, może sporo kosztować w przyszłości, więc przy dalszym rozwoju aplikacji należało by napisać odpowiednie testy.
