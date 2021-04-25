@@ -4,11 +4,13 @@ Aplikacja będąca rozwiązaniem zadania rekrutacyjnego nr 1 (Mobile Software De
 
 Aplikacja została stworzona w architekturze MVVM - pobiera dane z API Githuba, przechowuje je w bazie danych, i za pomocą repozytorium udostępnia dwóm ekranom:
 
-Ekran wypisujący listę wszystkich repozytorów użytkownika, wraz z podstawowymi informacjami
-*screenshot*
+Ekran wypisujący listę wszystkich repozytorów użytkownika, wraz z podstawowymi informacjami:
 
-Ekran wypisujący szczegóły konkretnego repozytorium
-*screenshot*
+<img src="https://github.com/BDemut/repobrowser/blob/main/list.jpg" alt="list screenshot" width="360" height="640">
+
+Ekran wypisujący szczegóły konkretnego repozytorium:
+
+<img src="https://github.com/BDemut/repobrowser/blob/main/detes.jpg" alt="details screenshot" width="360" height="640">
 
 Aplikacja została poszerzona o funkcjonalność wyboru użytkownika, którego repozytoria chcemy wyświetlić.
 
