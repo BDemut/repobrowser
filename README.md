@@ -30,7 +30,7 @@ Posiadają dostęp do klasy Repository - pobierają z niej dane i udostępniają
 
 Repository
 -
-Obiekt typu singleton (zasięg aplikacji - jest udostępniany ViewModelom za pomocą biblioteki Hilt), zarządza danymi aplikacji. Pobiera dane z sieci i udostępnia je poprzez bazę danych. Dzięki DI biblioteki Hilt obsługuje również SharedPrefferences aplikacji (przechowywana jest tam nazwa użytkownika).
+Obiekt typu singleton (o zasięgu aplikacji - jest on udostępniany ViewModelom za pomocą biblioteki Hilt), zarządza danymi aplikacji. Pobiera dane z sieci i udostępnia je poprzez bazę danych. Obsługuje również SharedPrefferences (przechowywana jest tam nazwa użytkownika).
 
 ApiService
 -
@@ -46,7 +46,7 @@ Struktura folderów w rozwiązaniu została zaprojektowana aby odzwierciedlić a
 
 ListFragment służy jako element początkowy w hierarchii nawigacji. Wyświetla on informacje o repozytoriach za pomocą RecyclerView i reaguje na eventy UI. Po naciśnięciu ikonki lupy, wywołuje SearchUserDialog, który służy do wprowadzenia nazwy uzytkownika. ListViewModel przechowuje informacje o repozytoriach, w formie klasy ShortRepo zawierającej podstawowe dane. Wywołuje on również odpowiednie funkcje w klasie Repository po wprowadzeniu nowej nazwy użytkownika lub wciśnięciu ikonki odświeżenia.
 
-Po wybraniu elementu w ListFragment, za pomocą SafeArgs przekazywane jest ID repozytorium do DetailsFragment. Następnie, DetailsViewModel pobiera z Repository dane dotyczące repozytorium o tym ID w formie obiektu LongRepo. DetailsFragment odczytuje te dane i wyświetla je na ekranie. Jeżeli brakuje danych o językach, wywołuje funckję w DetailsViewModel, która zleca Repository pobranie ich z Github API. DetailsFragment pozwala również na otworzenie strony repozytorium w przeglądarce lub aplikacji Github za pomocą startActivity().
+Po wybraniu elementu w ListFragment, za pomocą SafeArgs przekazywane jest ID repozytorium do DetailsFragment. Następnie, DetailsViewModel pobiera z Repository dane dotyczące repozytorium o tym ID w formie obiektu LongRepo. DetailsFragment odczytuje te dane i wyświetla je na ekranie. Jeżeli brakuje danych o językach, wywołuje funkcję w DetailsViewModel, która zleca Repository pobranie ich z Github API. DetailsFragment pozwala również na otworzenie strony repozytorium w przeglądarce lub aplikacji Github za pomocą startActivity().
 
 Klasa Repository ma tylko jedną instancję wspólną dla całej aplikacji. Posiada ona wyłączny dostęp do bazy danych i interfejsu API. Działa ona na zasadzie 'single source of truth' - dane pobierane z internetu umieszczane są w bazie danych, i obiekt Repository udostępnia tylko i wyłącznie dane z bazy danych. Obiekt ten jest również odpowiedzialny za konwertowanie obiektów przedstawiających repozytoria z jednego typu 'data class' w inny (w niektórych przypadkach jest to uproszczone gdy DAO poprzez polecenie SELECT zwraca bezpośrednio model domeny).
 
