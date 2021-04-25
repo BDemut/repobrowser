@@ -40,26 +40,28 @@ Baza danych biblioteki Room służąca jako offline cache danych pobranych z Git
 
 # Szczegóły implementacji
 
-Struktura folderów w rozwiązaniu została zaprojektowana aby odzwierciedlić architekturę aplikacji (np. pliki dotyczące jednego ekranu są zgrupowane razem). ListFragment służy jako element początkowy w hierarchii nawigacji. Wyświetla on informacje o repozytoriach za pomocą RecyclerView i reaguje na eventy UI. Po naciśnięciu ikonki lupy wywołuje SearchUserDialog który służy do wprowadzenia nazwy uzytkownika. ListViewModel przechowuje informacje o repozytoriach w formie klasy ShortRepo zawierającej podstawowe informacje. Wywołuje on również odpowiednie funkcje w klasie Repository po wprowadzeniu nowej nazwy użytkownika lub wciśnięciu ikonki odświeżenia.
+Struktura folderów w rozwiązaniu została zaprojektowana aby odzwierciedlić architekturę aplikacji (np. pliki dotyczące jednego ekranu są zgrupowane razem).
 
-Po wybraniu elementu w ListFragment, za pomocą SafeArgs przekazywane jest id repozytorium do DetailsFragment. Następnie DetailsViewModel pobiera z Repository dane dotyczące repozytorium o tym id. ListFragment odczytuje te dane i wyświetla je na ekranie. Jeżeli brakuje danych o językach, wywołuje funckję w ViewModel, która zleca Repository pobranie ich z Github API. ListFragment pozwala również na otworzenie strony repozytorium w przeglądarce lub aplikacji Github za pomocą startActivity()
+ListFragment służy jako element początkowy w hierarchii nawigacji. Wyświetla on informacje o repozytoriach za pomocą RecyclerView i reaguje na eventy UI. Po naciśnięciu ikonki lupy, wywołuje SearchUserDialog, który służy do wprowadzenia nazwy uzytkownika. ListViewModel przechowuje informacje o repozytoriach, w formie klasy ShortRepo zawierającej podstawowe dane. Wywołuje on również odpowiednie funkcje w klasie Repository po wprowadzeniu nowej nazwy użytkownika lub wciśnięciu ikonki odświeżenia.
 
-Klasa Repository ma tylko jedną instancję wspólną dla całej aplikacji. Posiada ona wyłączny dostęp do bazy danych i interfejsu API. Działa ona na zasadzie 'single source of truth' - dane pobierane z internetu umieszczane są w bazie danych, i obiekt Repository udostępnia tylko i wyłącznie dane z bazy danych. Obiekt ten jest również odpowiedzialny konwertowanie obiektów przedstawiających repozytoria z jednego typu 'data class' w inny (w niektórych przypadkach jest to uproszczone gdy DAO poprzez polecenie SELECT zwraca bezpośrednio model domeny).
+Po wybraniu elementu w ListFragment, za pomocą SafeArgs przekazywane jest ID repozytorium do DetailsFragment. Następnie, DetailsViewModel pobiera z Repository dane dotyczące repozytorium o tym ID w formie obiektu LongRepo. DetailsFragment odczytuje te dane i wyświetla je na ekranie. Jeżeli brakuje danych o językach, wywołuje funckję w DetailsViewModel, która zleca Repository pobranie ich z Github API. DetailsFragment pozwala również na otworzenie strony repozytorium w przeglądarce lub aplikacji Github za pomocą startActivity().
+
+Klasa Repository ma tylko jedną instancję wspólną dla całej aplikacji. Posiada ona wyłączny dostęp do bazy danych i interfejsu API. Działa ona na zasadzie 'single source of truth' - dane pobierane z internetu umieszczane są w bazie danych, i obiekt Repository udostępnia tylko i wyłącznie dane z bazy danych. Obiekt ten jest również odpowiedzialny za konwertowanie obiektów przedstawiających repozytoria z jednego typu 'data class' w inny (w niektórych przypadkach jest to uproszczone gdy DAO poprzez polecenie SELECT zwraca bezpośrednio model domeny).
 
 # Kolejne iteracje projektu
 Funkcje jakie można dodać w kolejnych iteracjach:
 
 Autoryzacja użytkownika
 -
-Głównym problemem aplikacji jest limit API Githuba ograniczający liczbę poleceń jakie można wysłać do 60 na godzinę. Jest to mało, biorąc pod uwagę to, że aplikacja wykonuje zapytanie za każdym razem gdy wyświetlane są szczegóły repozytorium (o ile nie posiada ich już w bazie danych). Dla autoryzowanych użytkowników limit ten rośnie do ponad 1000 w zależności od rodzaju autoryzacji co praktycznie samo w sobie eliminuje ten problem. Dodatkowo autoryzacja pozwala na dodanie funkcji takich jak wyświetlanie prywatnych repozytoriów.
+Głównym problemem aplikacji jest limit API Githuba ograniczający liczbę poleceń jakie można wysłać do 60 na godzinę. Jest to mało, biorąc pod uwagę to, że aplikacja wykonuje zapytanie za każdym razem gdy wyświetlane są szczegóły repozytorium (o ile nie posiada ich już w bazie danych). Dla autoryzowanych użytkowników limit ten rośnie do ponad 1000 w zależności od rodzaju autoryzacji, co praktycznie samo w sobie eliminuje ten problem. Dodatkowo autoryzacja pozwala na dodanie funkcji takich jak np. wyświetlanie prywatnych repozytoriów.
 
 Przechowywanie informacji o więcej niż 1 użytkowniku
 -
-Innym sposobem w jaki można zaadresować powyższy problem jest rozszerzenie funkcjonalności offline cachingu. Aktualnie za każdym razem gdy wyszukiwany jest nowy użytkownik baza danych jest całkowicie czyszczona - zamiast tego można by przechowywać dane np. często odwiedzanych użytkowników lub kilku ostatnio odwiedzonych użytkowników.
+Innym sposobem w jaki można zaadresować powyższy problem jest rozszerzenie funkcjonalności offline cachingu. Aktualnie, za każdym razem, gdy wyszukiwany jest nowy użytkownik baza danych jest całkowicie czyszczona - zamiast tego można by przechowywać dane np. często odwiedzanych użytkowników lub kilku ostatnio odwiedzonych użytkowników.
 
 Więcej detali
 -
-Ekran DetailFragmet wyświetla minimum informacji potrzebnych do oszacowania popularności, aktualności i budowy repozytorium. W kolejnych iteracjach można rozwinąć ten ekran aby zawierał więcej informacji, np. listę osób tworzących repozytorium a nawet plik README.
+Ekran DetailsFragment wyświetla minimum informacji potrzebnych do oszacowania popularności, aktualności i budowy projektu. W kolejnych iteracjach można rozwinąć ten ekran aby zawierał więcej informacji, np. listę osób tworzących repozytorium a nawet plik README.
 
 Filtrowanie i sortowanie
 -
